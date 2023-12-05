@@ -1,182 +1,76 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Live HTML Editor</title>
-        <meta name="description" content="Live HTML Editor is web Application developed by Umendra Pardhi student of Government Polytechnic Gondia">
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-        <style>
-            *{
-                box-sizing:border-box;
-                font-family: sans-serif;    
-            }
-            html,body{
-                margin:0px;
-                padding: 0px;
-            }
-            .container{
-                height: 100vh;
-            }
-            .block{
-                height: 90%;
-                display: flex;
-                margin: 0px 5px;
-            }
-            .block1{
-                height: 9%;
-                padding: 8px;
-            }
-            h3{
-                color: green;
-                margin: 5px;
-                margin-left: 15px;
-                margin-bottom: 7px;
-            }
-            .i1,.i2{
-                border: 2px solid green;
-                height: 100%;
-                width: 50%;
-                margin: 0px 1px;
-            }
-            button{
-                color: white;
-                background-color: green;
-                border-radius: 3px;
-                border: 1px solid grey;
-                margin: 0 0 5px 5px;
-                cursor:pointer;
-            }
+<head>
+    <title>Live HTML Editor</title>
+    <meta name="description"
+        content="Live HTML Editor is web Application developed by Umendra Pardhi student of Government Polytechnic Gondia">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"> -->
+    <link rel="stylesheet" href="css/style.min.css" />
+    <link rel="stylesheet" href="font/bootstrap-icons.css" />
+</head>
 
-            @media(max-width:600px){
-                .container{
-                height: 100vh;
-            }
-            .block1{
-                height: 9%;
-                padding: 5px;
-                display: flex;
-                flex-direction: column;
-            }
-            .block{
-                height: 90%;
-                display: flex;
-                flex-direction: column;
-                padding: 0px 5px;
-            }
-                .i1,.i2{
-                border: 2px solid green;
-                height: 50%;
-                width: 100%;
-                margin: 2px 0px;
-            } 
-            }
-            textarea{
-                width: 100%;
-                height: 100%;
-                resize:none;
-                border: none;
-                padding: 5px;
-            }
-            input{
-                margin-left: 30px;
-                cursor:pointer;
-            }
-            label{
-                cursor:pointer;
-            }
-            iframe{
-                border: none;
-            }
-            .modal{
-                position: absolute;
-                left: 50%;
-                top: 30%;
-                transform: translate(-50%, -50%);
-                background-color:rgb(10, 190, 121);
-                padding: 10px;
-                border: 2px double silver;
-                border-radius: 10px;
-                text-align: center;
-                
-            }
-            a{
-                text-decoration: none;
-                color: white;
-                font-weight: bold;
-                float: right;
-            }
-        </style>
-    </head>
-    <body>
-        
-        <div class="container">
-            <div class="block1">
-                <div>
-                    <h3 style="display: inline;">HTML Editor</h3>
-                    <button id="about" style="float: right;margin-right: 10px;" onclick="show()">About Us</button>
+<body>
+
+    <div class="container">
+        <div class="block1">
+            <div>
+                <h3 style="display: inline;">HTML <i class="bi bi-code"></i> Editor</h3>
+                <span id="menu"
+                    style="float: right;margin-right: 20px;font-size: 16px;margin-top: 0px;cursor: pointer;"><b>&#9776;</b></span>
+                <div class="sh-controls" style="float: right;margin-right: 20px;">
+                    <button onclick="show_code()"><i class="bi bi-code-slash"></i> Code</button>
+                    <button onclick="show_result()"><i class="bi bi-window-fullscreen"></i> Result</button>
+                    <button onclick="show_code_result()"><i class="bi bi-code-slash"></i> Code | <i class="bi bi-window-fullscreen"></i> Result</button>
                 </div>
-                <div>
-                    <form name="form1" style="display: inline;"><input type="checkbox" id="livep" value="livep" onclick="preview()" checked><label for="livep" >Live Preview</label></form>
-                    <button id="run">Run</button><br>
-                </div>
+
             </div>
-            <div class="block">
-                <div class="i1">
-                    <textarea id="mycode" spellcheck="false" ></textarea>
-                </div>
-                <div class="i2">
-                    <iframe id="display" width="100%" height="100%" ></iframe>
-                </div>
+            <div>
+
+                <form name="form1" style="display: inline;"><input type="checkbox" id="livep" value="livep"
+                        onclick="preview()" checked><label for="livep">Live Preview</label>
+                    <button id="run">Run</button>
+                    <input type="range" name="fs" max="36" min="10" value="16"><label id="fsl">16</label>
+                </form><br>
             </div>
         </div>
+        <div class="block">
+            <div id="i1" class="i1">
+                <textarea id="mycode" spellcheck="false"></textarea>
+            </div>
+            <div id="i2" class="i2">
+                <iframe id="display" width="100%" height="100%" oncontextmenu="return false"></iframe>
+            </div>
+        </div>
+    </div>
+    <div id="nav-back">
+        <div class="nav" id="nav">
+            <button id="about" onclick="show()"><i class="bi bi-info-circle"></i> About</button><br>
+            <button id="dwn"><i class="bi bi-download"></i> Download Code</button><br>
+            <button id="fcode" onclick="show_code()"><i class="bi bi-code-slash"></i> Code</button>
+            <button id="fresult" onclick="show_result()"><i class="bi bi-window-fullscreen"></i> Result</button>
+            <button id="fboth" onclick="show_code_result()"><i class="bi bi-code-slash"></i> Code | <i
+                    class="bi bi-window-fullscreen"></i>
+                Result</button>
+            <span id="close-nav">&times;</span>
+        </div>
+
+    </div>
+
+    <div id="modalback">
         <div id="moda" class="modal">
 
-            <a href="#" onclick="hide()">x</a>
+            <a href="#" onclick="hide()">&times;</a><br><br>
             <h3 style="color: white;">Live HTML Editor</h3>
-            <p style="color: aquamarine;">version 1.0</p>
+            <p style="color: aquamarine;">Supported Language: <span style="color: #fff6f8;font-size: 20px;"> <i
+                        class="bi bi-filetype-html"></i> <i class="bi bi-filetype-css"></i> <i
+                        class="bi bi-filetype-js"></i></span><br><br>version: 2.0</p>
             <h5 style="color: white;">Developer: Umendra Pardhi</h5>
 
         </div>
-        <script type="text/javascript">
-            
-            var content = document.getElementById('mycode').value=`<html>\n<head>\n\n</head>\n<body>\n\n<h1>Welcome To Live HTML Editor</h1>\n\n</body>\n</html>`;
-            function update(){
-                    var content = document.getElementById('mycode').value;
-                    var iframe = document.getElementById('display');
-                    iframe = (iframe.contentWindow) ? iframe.contentWindow : (iframe.contentDocument.document) ? iframe.contentDocument.document : iframe.contentDocument;
-                    iframe.document.open();
-                    iframe.document.write(content);
-                    iframe.document.close();
-                    return false;
-                }
-                
-            function preview(){
-                var check=document.getElementById("livep");
-                var run=document.getElementById("run");
-                var a=document.form1.livep.checked;
-                run.style.visibility=(a) ? "hidden" : "visible";
-            }
-            
-            update();
-            preview();
-            
-            var input=document.getElementById("mycode");
-            input.oninput =function(){
-                var a=document.form1.livep.checked;
-                (a) ? update() : preview() ;
-            }
-            run.onclick=function(){
-                  update();
-                }
+    </div>
+    <script type="text/javascript" src="app/script-html.min.js"></script>
+</body>
 
-           function show(){
-               let v=document.getElementById("moda");
-               v.style.display="block";
-           }
-           function hide(){
-               let v=document.getElementById("moda");
-               v.style.display="none";
-           }
-		</script>
-    </body>
 </html>
